@@ -15,6 +15,7 @@ import ReportsView from './components/ReportsView.vue';
 import SettingsView from './components/SettingsView.vue';
 import SupportView from './components/SupportView.vue';
 import LoginView from './components/LoginView.vue';
+import ProfileView from './components/ProfileView.vue';
 
 const currentView = computed(() => {
   switch (store.activeTab) {
@@ -40,6 +41,8 @@ const currentView = computed(() => {
       return SettingsView;
     case 'support':
       return SupportView;
+    case 'profile':
+      return ProfileView;
     default:
       return DashboardView;
   }

@@ -19,7 +19,7 @@ const formPhone = ref('');
 const formSalary = ref(0);
 const formIsActive = ref(true);
 
-const roles = ['Administrador', 'Regente Farmacéutico', 'Vendedor', 'Cajero', 'Auditor'];
+const roles = ['Administrador', 'Regente Farmacéutico', 'Vendedor', 'Auditor'];
 
 onMounted(() => {
   store.fetchEmployees();

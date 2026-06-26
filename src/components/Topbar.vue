@@ -16,7 +16,8 @@ const tabLabels: Record<string, string> = {
   audit: 'Trazabilidad y Bitácoras de Auditoría',
   reports: 'Reportes y Analíticas',
   settings: 'Configuración Global',
-  support: 'Centro de Soporte'
+  support: 'Centro de Soporte',
+  profile: 'Mi Perfil de Usuario'
 };
 
 const tabLabel = computed(() => tabLabels[store.activeTab] || 'FarmaSecure');

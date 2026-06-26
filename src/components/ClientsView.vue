@@ -103,7 +103,7 @@ async function handleSaveClient() {
 }
 const canWriteClients = computed(() => {
   const role = store.currentRole;
-  return role === 'Administrador' || role === 'Vendedor' || role === 'Cajero';
+  return role === 'Administrador' || role === 'Vendedor';
 });
 </script>
 

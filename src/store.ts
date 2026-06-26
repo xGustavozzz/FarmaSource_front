@@ -5,9 +5,9 @@ const API_BASE = 'http://localhost:3001/api';
 
 export const store = reactive({
   // Auth state
-  isLoggedIn: true, // Default to true, same as React app for testing
-  currentUser: 'admin.secure',
-  currentRole: 'Administrador',
+  isLoggedIn: false, // Default to false, enforce login
+  currentUser: '',
+  currentRole: '',
   userProfile: null as any,
 
   // UI state
@@ -62,12 +62,22 @@ export const store = reactive({
     }
   },
 
-  async login(username: string) {
+  normalizeDbRoleToFrontend(role: string): string {
+    if (!role) return '';
+    const r = role.trim().toUpperCase();
+    if (r === 'ADMINISTRADOR') return 'Administrador';
+    if (r === 'FARMACEUTICO' || r === 'REGENTE FARMACÉUTICO' || r === 'REGENTE') return 'Regente Farmacéutico';
+    if (r === 'VENDEDOR' || r === 'CAJERO') return 'Vendedor';
+    if (r === 'AUDITOR') return 'Auditor';
+    return role;
+  },
+
+  async login(username: string, passwordVal: string) {
     try {
       const res = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username })
+        body: JSON.stringify({ username, password: passwordVal })
       });
       if (!res.ok) {
         throw new Error('Credenciales inválidas');
@@ -75,14 +85,33 @@ export const store = reactive({
       const data = await res.json();
       this.isLoggedIn = true;
       this.currentUser = data.currentUser;
-      this.currentRole = data.currentRole;
+      this.currentRole = this.normalizeDbRoleToFrontend(data.currentRole);
       this.userProfile = data.user;
-      this.redirectAfterLogin(data.currentRole || this.currentRole);
+      this.redirectAfterLogin(this.currentRole);
       this.fetchDashboardStats();
       return true;
     } catch (err) {
       console.error(err);
       return false;
+    }
+  },
+
+  async changePassword(oldPassword: string, newPassword: string) {
+    try {
+      const res = await fetch(`${API_BASE}/auth/change-password`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({ oldPassword, newPassword })
+      });
+      if (res.ok) {
+        return { success: true };
+      } else {
+        const errData = await res.json();
+        return { success: false, message: errData.message || 'Error al cambiar contraseña' };
+      }
+    } catch (err: any) {
+      console.error(err);
+      return { success: false, message: err.message || 'Error de red' };
     }
   },
 

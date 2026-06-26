@@ -13,7 +13,8 @@ import {
   BarChart3,
   Settings,
   HelpCircle,
-  Activity
+  Activity,
+  User
 } from 'lucide-vue-next';
 
 const rawNavigationItems = [
@@ -36,11 +37,11 @@ const navigationItems = computed(() => {
       case 'dashboard':
         return role === 'Auditor';
       case 'products':
-        return role === 'Regente Farmacéutico' || role === 'Vendedor' || role === 'Cajero';
+        return role === 'Regente Farmacéutico' || role === 'Vendedor';
       case 'clients':
-        return role === 'Vendedor' || role === 'Cajero';
+        return role === 'Vendedor';
       case 'sales':
-        return role === 'Vendedor' || role === 'Cajero';
+        return role === 'Vendedor';
       case 'purchases':
         return role === 'Regente Farmacéutico';
       case 'employees':
@@ -97,6 +98,18 @@ const navigationItems = computed(() => {
 
     <!-- Sidebar Footer -->
     <div class="p-4 border-t border-primary-container space-y-1">
+      <button
+        @click="store.setTab('profile')"
+        :class="[
+          'w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-left text-xs font-medium transition-all',
+          store.activeTab === 'profile'
+            ? 'bg-on-primary-fixed-variant text-primary-fixed font-semibold'
+            : 'text-on-primary-container/85 hover:text-white hover:bg-white/10'
+        ]"
+      >
+        <User :size="16" />
+        <span>Mi Perfil</span>
+      </button>
       <button
         @click="store.setTab('settings')"
         :class="[
