@@ -35,6 +35,19 @@ async function handleReplenish() {
   isReplenishing.value = false;
   showNotifications.value = false;
 }
+
+const userDisplayName = computed(() => {
+  return store.userProfile?.fullName || store.currentUser || 'Usuario';
+});
+
+const userInitials = computed(() => {
+  const name = store.userProfile?.fullName || store.currentUser || 'US';
+  const parts = name.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
+});
 </script>
 
 <template>
@@ -117,14 +130,14 @@ async function handleReplenish() {
         <div class="text-right">
           <div class="text-sm font-bold text-primary flex items-center gap-1 justify-end">
             <ShieldCheck :size="14" class="text-secondary" />
-            <span>{{ store.currentUser }}</span>
+            <span>{{ userDisplayName }}</span>
           </div>
           <div class="text-[11px] font-mono text-outline font-semibold tracking-wide uppercase">
             {{ store.currentRole }}
           </div>
         </div>
         <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container font-extrabold text-sm border border-surface-container">
-          {{ store.currentUser.substring(0, 2).toUpperCase() }}
+          {{ userInitials }}
         </div>
         
         <!-- Logout button -->

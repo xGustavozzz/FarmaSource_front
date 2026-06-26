@@ -43,19 +43,19 @@ async function handleSubmit() {
           </div>
           <div>
             <h2 class="text-3xl font-extrabold text-white tracking-tight">FarmaSecure</h2>
-            <p class="text-xs font-mono font-bold text-on-primary-container uppercase tracking-wider mt-1">
+            <p class="text-xs font-mono font-bold text-secondary uppercase tracking-wider mt-1">
               Pharmacy Control System & Audit Ledger
             </p>
           </div>
-          <p class="text-xs text-on-primary-fixed-variant leading-relaxed max-w-sm">
+          <p class="text-xs text-slate-300 leading-relaxed max-w-sm font-medium">
             Inicie sesión utilizando su firma o token criptográfico. Registre operaciones sensibles del inventario con bitácoras inmutables automáticas.
           </p>
         </div>
 
-        <div class="p-4 bg-[#001f2a]/50 rounded-xl border border-primary-container text-xs text-on-primary-fixed-variant space-y-2">
+        <div class="p-4 bg-[#001f2a]/50 rounded-xl border border-primary-container text-xs space-y-2">
           <span class="font-bold text-[10px] font-mono text-secondary uppercase block">Seguridad del Sistema</span>
-          <p class="text-[11px] leading-relaxed">
-            Las contraseñas de los nuevos colaboradores son asignadas por defecto como <code class="bg-[#002130] text-white px-1.5 py-0.5 rounded font-mono">admin123</code>. Cada colaborador deberá ingresar y actualizar su contraseña desde la sección "Mi Perfil".
+          <p class="text-[11px] text-slate-200 leading-relaxed font-medium">
+            Las contraseñas de los nuevos colaboradores son asignadas por defecto como <code class="bg-[#002130] text-white px-1.5 py-0.5 rounded font-mono font-bold">admin123</code>. Cada colaborador deberá ingresar y actualizar su contraseña desde la sección "Mi Perfil".
           </p>
         </div>
       </div>
@@ -64,38 +64,38 @@ async function handleSubmit() {
       <div class="bg-[#001f2a] p-8 rounded-2xl border border-primary-container flex flex-col justify-center space-y-6">
         <div class="space-y-1">
           <h3 class="font-extrabold text-lg text-white">Consola de Acceso</h3>
-          <p class="text-xs text-outline">Ingrese sus credenciales registradas</p>
+          <p class="text-xs text-slate-300 font-medium">Ingrese sus credenciales registradas</p>
         </div>
 
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <div v-if="errorMessage" class="bg-error-container text-on-error-container p-3 rounded-lg text-xs">
+          <div v-if="errorMessage" class="bg-error-container text-on-error-container p-3 rounded-lg text-xs font-bold">
             <div>{{ errorMessage }}</div>
           </div>
 
           <!-- User field -->
           <div>
-            <label class="text-[10px] font-mono font-bold text-outline block mb-1">USUARIO (FIRMA DIGITAL) *</label>
+            <label class="text-[10px] font-mono font-bold text-slate-200 block mb-1">USUARIO (FIRMA DIGITAL) *</label>
             <input
               type="text"
               required
               v-model="usernameInput"
               placeholder="Ej. c.perez.4"
-              class="w-full bg-[#002130] border border-primary-container text-white rounded-lg px-3 py-2.5 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary"
+              class="w-full bg-[#002130] border border-primary-container text-white placeholder-slate-500 rounded-lg px-3 py-2.5 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary"
             />
           </div>
 
           <!-- Password -->
           <div>
-            <label class="text-[10px] font-mono font-bold text-outline block mb-1">CONTRASEÑA DE SEGURIDAD *</label>
+            <label class="text-[10px] font-mono font-bold text-slate-200 block mb-1">CONTRASEÑA DE SEGURIDAD *</label>
             <div class="relative">
               <input
                 type="password"
                 required
                 v-model="password"
                 placeholder="Ingrese contraseña"
-                class="w-full bg-[#002130] border border-primary-container text-white rounded-lg pl-3 pr-8 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary"
+                class="w-full bg-[#002130] border border-primary-container text-white placeholder-slate-500 rounded-lg pl-3 pr-8 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary"
               />
-              <Lock :size="14" class="absolute right-3 top-3.5 text-outline" />
+              <Lock :size="14" class="absolute right-3 top-3.5 text-slate-300" />
             </div>
           </div>
 
@@ -111,7 +111,7 @@ async function handleSubmit() {
         </form>
 
         <!-- Secure disclaimer -->
-        <div class="pt-2 text-[9px] text-[#7fa8b9]/60 font-mono flex items-center justify-center gap-1.5 leading-relaxed text-center">
+        <div class="pt-2 text-[9px] text-slate-300 font-mono flex items-center justify-center gap-1.5 leading-relaxed text-center font-medium">
           <Lock :size="12" class="shrink-0" />
           <span>Encriptación de canal TLS 1.3 - SRI Facturación Electrónica Habilitado</span>
         </div>
