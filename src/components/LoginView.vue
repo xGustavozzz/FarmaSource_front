@@ -42,6 +42,7 @@ function handleMockLogin() {
   store.isLoggedIn = true;
   store.currentUser = usernameInput.value;
   store.currentRole = selectedRolePreset.value;
+  (store as any).redirectAfterLogin(selectedRolePreset.value);
   store.fetchDashboardStats();
 }
 </script>

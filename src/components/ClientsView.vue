@@ -101,6 +101,10 @@ async function handleSaveClient() {
     alert('Hubo un error al guardar el cliente.');
   }
 }
+const canWriteClients = computed(() => {
+  const role = store.currentRole;
+  return role === 'Administrador' || role === 'Vendedor' || role === 'Cajero';
+});
 </script>
 
 <template>
@@ -119,6 +123,7 @@ async function handleSaveClient() {
         </div>
 
         <button
+          v-if="canWriteClients"
           @click="handleOpenNewModal"
           class="bg-primary hover:bg-primary-container text-white transition-all font-semibold text-xs py-2 px-4 rounded-xl flex items-center gap-1.5 shadow-sm self-end cursor-pointer"
         >
@@ -203,7 +208,7 @@ async function handleSaveClient() {
         </div>
 
         <!-- Edit actions -->
-        <div class="mt-6 pt-4 border-t border-surface-container flex justify-end">
+        <div v-if="canWriteClients" class="mt-6 pt-4 border-t border-surface-container flex justify-end">
           <button
             @click="handleOpenEditModal(client)"
             class="text-xs text-primary bg-surface-container hover:bg-surface-container-high font-bold py-1.5 px-3 rounded-lg flex items-center gap-1 transition-colors cursor-pointer"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { store } from '../store';
 import {
   LayoutDashboard,
@@ -15,7 +16,7 @@ import {
   Activity
 } from 'lucide-vue-next';
 
-const navigationItems = [
+const rawNavigationItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'products', label: 'Productos', icon: Boxes },
   { id: 'clients', label: 'Clientes', icon: Users },
@@ -26,6 +27,35 @@ const navigationItems = [
   { id: 'audit', label: 'Auditoría', icon: History },
   { id: 'reports', label: 'Reportes', icon: BarChart3 },
 ];
+
+const navigationItems = computed(() => {
+  const role = store.currentRole;
+  return rawNavigationItems.filter(item => {
+    if (role === 'Administrador') return true;
+    switch (item.id) {
+      case 'dashboard':
+        return role === 'Auditor';
+      case 'products':
+        return role === 'Regente Farmacéutico' || role === 'Vendedor' || role === 'Cajero';
+      case 'clients':
+        return role === 'Vendedor' || role === 'Cajero';
+      case 'sales':
+        return role === 'Vendedor' || role === 'Cajero';
+      case 'purchases':
+        return role === 'Regente Farmacéutico';
+      case 'employees':
+        return false;
+      case 'roles':
+        return false;
+      case 'audit':
+        return role === 'Auditor';
+      case 'reports':
+        return role === 'Auditor';
+      default:
+        return false;
+    }
+  });
+});
 </script>
 
 <template>

@@ -50,6 +50,18 @@ export const store = reactive({
     };
   },
 
+  redirectAfterLogin(role: string) {
+    if (role === 'Administrador' || role === 'Auditor') {
+      this.activeTab = 'dashboard';
+    } else if (role === 'Regente Farmacéutico') {
+      this.activeTab = 'products';
+    } else if (role === 'Vendedor' || role === 'Cajero') {
+      this.activeTab = 'sales';
+    } else {
+      this.activeTab = 'products';
+    }
+  },
+
   async login(username: string) {
     try {
       const res = await fetch(`${API_BASE}/auth/login`, {
@@ -65,6 +77,7 @@ export const store = reactive({
       this.currentUser = data.currentUser;
       this.currentRole = data.currentRole;
       this.userProfile = data.user;
+      this.redirectAfterLogin(data.currentRole || this.currentRole);
       this.fetchDashboardStats();
       return true;
     } catch (err) {

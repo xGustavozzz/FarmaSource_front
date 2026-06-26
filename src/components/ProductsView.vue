@@ -126,6 +126,11 @@ async function triggerReplenish() {
   await store.replenishCriticalStock();
   isReplenishing.value = false;
 }
+
+const canWriteProducts = computed(() => {
+  const role = store.currentRole;
+  return role === 'Administrador' || role === 'Regente Farmacéutico';
+});
 </script>
 
 <template>
@@ -138,7 +143,7 @@ async function triggerReplenish() {
           Control de Inventario Farmacéutico
         </h3>
 
-        <div class="flex items-center gap-2 self-end">
+        <div v-if="canWriteProducts" class="flex items-center gap-2 self-end">
           <button
             @click="triggerReplenish"
             :disabled="isReplenishing"
@@ -206,12 +211,12 @@ async function triggerReplenish() {
               <th class="py-3 px-4 text-right">P. Venta</th>
               <th class="py-3 px-4 text-center">Stock</th>
               <th class="py-3 px-4 text-center">Estado</th>
-              <th class="py-3 px-6 text-center">Acciones</th>
+              <th v-if="canWriteProducts" class="py-3 px-6 text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="filteredProducts.length === 0">
-              <td colSpan="8" class="py-12 text-center text-outline text-sm">
+              <td :colSpan="canWriteProducts ? 8 : 7" class="py-12 text-center text-outline text-sm">
                 No se encontraron productos coincidentes o bajo stock.
               </td>
             </tr>
@@ -272,7 +277,7 @@ async function triggerReplenish() {
               </td>
               
               <!-- Acciones -->
-              <td class="py-4 px-6 text-center">
+              <td v-if="canWriteProducts" class="py-4 px-6 text-center">
                 <div class="flex items-center justify-center gap-2">
                   <button
                     @click="handleOpenEditModal(prod)"
